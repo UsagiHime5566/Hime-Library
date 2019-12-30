@@ -1,0 +1,64 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Sirenix.OdinInspector;
+
+namespace TriggerSystem
+{
+    public class ConditionReal : TriggerCondition
+    {
+        [HorizontalGroup("Group A")] public GlobalRealValue RefA;
+        [HorizontalGroup("Group A"), ShowIf("RefA", GlobalRealValue.Value)] public double valueA;
+        public ConditionOperator operation;
+        [HorizontalGroup("Group B")] public GlobalRealValue RefB;
+        [HorizontalGroup("Group B"), ShowIf("RefB", GlobalRealValue.Value)] public double valueB;
+
+        public override bool GetConditionFunc()
+        {
+            return RealCondition(GetValueA(), GetValueB(), operation);
+        }
+        public double GetValueA()
+        {
+            return TriggerVariable.GetRealValue(RefA) ?? valueA;
+        }
+
+        public double GetValueB()
+        {
+            return TriggerVariable.GetRealValue(RefB) ?? valueB;
+        }
+
+        public bool RealCondition(double a, double b, ConditionOperator operation)
+        {
+            switch (operation)
+            {
+                case ConditionOperator.Equal:
+                    if (a == b)
+                        return true;
+                    break;
+                case ConditionOperator.NotEqual:
+                    if (a != b)
+                        return true;
+                    break;
+                case ConditionOperator.Larger:
+                    if (a > b)
+                        return true;
+                    break;
+                case ConditionOperator.LargerEqual:
+                    if (a >= b)
+                        return true;
+                    break;
+                case ConditionOperator.Lesser:
+                    if (a < b)
+                        return true;
+                    break;
+                case ConditionOperator.LesserEqual:
+                    if (a <= b)
+                        return true;
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        }
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "name": "com.usagihime.himelib",
+    "displayName": "Hime Library",
+    "version": "1.0.0",
+    "unity": "2018.4",
+    "description": "Unity lib by UsagiHime.",
+    "dependencies": {}
+}
