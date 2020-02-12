@@ -13,29 +13,28 @@ namespace HimeLib
         /// </summary>
         public static void CreateBatFile()
         {
-#if !UNITY_EDITOR
-        string companyName = Application.companyName;
-        string productName = Application.productName;
-        //example : GetDirectoryName('C:\MyDir\MySubDir\myfile.ext') returns 'C:\MyDir\MySubDir'
-        //example : GetDirectoryName('C:\MyDir\MySubDir') returns 'C:\MyDir'
-        string exePath = Path.GetDirectoryName(Application.dataPath);
-        string batName = exePath + "/" + Application.productName + ".bat";
-        UnityEngine.Debug.Log(batName);
-        var file = File.Open(batName, FileMode.Create, FileAccess.ReadWrite);
-        var writer = new StreamWriter(file);
-        writer.WriteLine("@echo off");
-        writer.WriteLine("echo !!!");
-        writer.WriteLine("echo Wait for system prepare...");
-        writer.WriteLine("ping 127.0.0.1 -n 10 -w 1000");
-        writer.WriteLine("setlocal");
-        writer.WriteLine("set regkey=\"HKEY_CURRENT_USER\\Software\\" + companyName + "\\" + productName + "\"");
-        writer.WriteLine("reg add %regkey% /v \"Screenmanager Resolution Width_h182942802\" /T REG_DWORD /D 1920 /f");
-        writer.WriteLine("reg add %regkey% /v \"Screenmanager Resolution Height_h2627697771\" /T REG_DWORD /D 1080 /f");
-        writer.WriteLine("endlocal");
-        writer.WriteLine(Application.productName + ".exe -screen-width 1920 -screen-height 1080 -screen-fullscreen 1");
-        writer.Flush();
-        file.Close();
-#endif
+        #if !UNITY_EDITOR
+            //example : GetDirectoryName('C:\MyDir\MySubDir\myfile.ext') returns 'C:\MyDir\MySubDir'
+            //example : GetDirectoryName('C:\MyDir\MySubDir') returns 'C:\MyDir'
+            string exePath = Path.GetDirectoryName(Application.dataPath);
+            string batName = exePath + "/" + Application.productName + ".bat";
+            UnityEngine.Debug.Log(batName);
+            var file = File.Open(batName, FileMode.Create, FileAccess.ReadWrite);
+            var writer = new StreamWriter(file);
+            writer.WriteLine("@echo off");
+            writer.WriteLine("echo !!!");
+            writer.WriteLine("echo Wait for system prepare...");
+            writer.WriteLine("ping 127.0.0.1 -n 10 -w 1000");
+            writer.WriteLine("cd /D " + exePath);
+            writer.WriteLine("setlocal");
+            writer.WriteLine("set regkey=\"HKEY_CURRENT_USER\\Software\\" + Application.companyName + "\\" + Application.productName + "\"");
+            writer.WriteLine("reg add %regkey% /v \"Screenmanager Resolution Width_h182942802\" /T REG_DWORD /D 1920 /f");
+            writer.WriteLine("reg add %regkey% /v \"Screenmanager Resolution Height_h2627697771\" /T REG_DWORD /D 1080 /f");
+            writer.WriteLine("endlocal");
+            writer.WriteLine(Application.productName + ".exe -screen-width 1920 -screen-height 1080 -screen-fullscreen 1");
+            writer.Flush();
+            file.Close();
+        #endif
         }
 
         /// <summary>
