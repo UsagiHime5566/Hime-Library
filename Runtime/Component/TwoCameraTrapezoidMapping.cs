@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class TwoCameraTrapezoidMapping : MonoBehaviour
 {
+    public readonly string tip1 = @"使用3個 Camera, 其中兩個Camera 輸出至RenderTexture, 第3個Camera 拍攝兩個RawImage(RenderTexture)";
+    public readonly string tip2 = @"F1F2 設置要調整的目標RawImage, WASD上下左右, QE旋轉, ZX水平縮放, CV垂直縮放, 倒退鍵 恢復預設";
     public RawImage rawImage1;
     public RawImage rawImage2;
 

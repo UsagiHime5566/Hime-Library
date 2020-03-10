@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
-public class TwoCameraHorizonMapping : MonoBehaviour
+public class Camera2DMapping : MonoBehaviour
 {
-    public readonly string tip = "附帶 F12按鍵 結束程式";
+    public readonly string tip = "單Camera 2D縮放平移, 附帶 F12按鍵 結束程式";
     public float moveFactor = 0.05f;
 
     Camera main;

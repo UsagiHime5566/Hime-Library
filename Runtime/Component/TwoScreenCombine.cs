@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TwoScreenCombine : MonoBehaviour
 {
-    public readonly string tip = "F4 Editor編輯模式 , F5 左右螢幕模式 , F6 右左螢幕模式";
+    public readonly string tip = "F4 Editor編輯模式 , F5 左右螢幕模式 , F6 右左螢幕模式, ZX 調整螢幕間寬度, Del 寬度恢復預設";
     public int displayMode = 0;
     public int splitAmount = 0;
 

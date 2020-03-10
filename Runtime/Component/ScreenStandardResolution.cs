@@ -5,12 +5,20 @@ using System.Linq;
 
 public class ScreenStandardResolution : MonoBehaviour
 {
+    public readonly string tip1 = @"腳本掛上時自動取得最大16:9視窗, 視窗模式時,最大16:9解析度視窗 / 全螢幕模式時,全螢幕16:9 解析度 其他區域黑邊 / 以上僅限windows/Mac";
+    public readonly string tip2 = @"持續偵測16:9:勾選bool參數開啟, 為了預防螢幕還沒開時造成錯誤解析度";
+    public readonly string tip3 = @"切換全螢幕/視窗的API: SwitchDisplayMode";
     public Action OnSwitchScreemMode;
     public string currentStats;
+    public bool continueCheckFullScreen = false;
+    public float checkPeriod = 30;
+
     void Start()
     {
         InitResolution16x9();
         StartCoroutine(UpdateStatsText());
+        if(continueCheckFullScreen)
+            StartCoroutine(RepeatChecking());
     }
 
     void InitResolution16x9(){
@@ -22,6 +30,17 @@ public class ScreenStandardResolution : MonoBehaviour
         }
 
         StartCoroutine(UpdateStatsText());
+    }
+
+    IEnumerator RepeatChecking(){
+        WaitForSeconds sec = new WaitForSeconds(checkPeriod);
+        while(true){
+            yield return sec;
+
+            Resolution[] resolutions = GetTwoResolution();
+            if(Screen.width != resolutions[1].width || Screen.height != resolutions[1].height)
+                Screen.SetResolution (resolutions[1].width, resolutions[1].height, true);
+        }
     }
 
     IEnumerator UpdateStatsText(){
